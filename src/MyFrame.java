@@ -16,6 +16,8 @@ public class MyFrame extends JFrame {
     }
 
     public void paint(Graphics graphics){
+
+        super.paint(graphics);
         Graphics2D g2D = (Graphics2D) graphics;
 
         //g2D.fillRect(0,0,100,200);

@@ -4,6 +4,7 @@ public class Ball
 {
     private int iD;
     private int[] position = new int[2];
+    private int[] nextPosition = new int[2];
     private double direction;
     private double velocity;
     private int radius;
@@ -22,6 +23,10 @@ public class Ball
 
     public int[] getPosition() {
         return position;
+    }
+
+    public int[] getNextPosition() {
+        return nextPosition;
     }
 
     public int getRadius() {
@@ -44,9 +49,38 @@ public class Ball
     }
 
     public void calculateNextPosition(){
-        position[0] += (int) velocity*Math.cos(direction);
-        position[1] += (int) velocity*Math.sin(direction);
+        nextPosition[0] += (int) velocity*Math.cos(direction);
+        nextPosition[1] += (int) velocity*Math.sin(direction);
+    }
+    public boolean collisionWithWall(MyFrame frame){
 
+        if (nextPosition[0] + radius >= frame.frameSizeX || nextPosition[0] - radius <= 0 ||
+                nextPosition[1] + radius >= frame.frameSizeY || nextPosition[1] - radius <= 0){
+            System.out.println("Kolizja!!");
+            return  true;
+        } else return false;
+    }
 
+    public boolean collisionWithBalls(Ball[] balls){
+        Double d;
+
+        for (Ball ball :
+             balls) {
+            if (iD == ball.iD ) continue;
+            d = Math.sqrt(Math.pow(this.nextPosition[0] - ball.nextPosition[0],2) + Math.pow(this.nextPosition[1] - ball.nextPosition[1],2));
+            if(d <= radius + ball.radius)  {
+                System.out.println("Kolizja z piłką");
+                return true;
+            }
+        }
+        return false;
+    }
+    public void changeDirectionAfterCollision(MyFrame frame){
+//        if (nextPosition[0] + radius >= frame.frameSizeX && direction >= 0 && direction <= Math.PI/2) // jeśli prawa ściana i kierunek w górę
+//        {
+//            direction += Math.PI/2;
+//        }
+
+        direction = direction + Math.PI;
     }
 }
