@@ -61,7 +61,7 @@ public class Ball
         } else return false;
     }
 
-    public boolean collisionWithBalls(Ball[] balls){
+    public synchronized int collisionWithBalls(List<Ball> ballList){
         Double d;
 
         for (Ball ball :
@@ -70,10 +70,10 @@ public class Ball
             d = Math.sqrt(Math.pow(this.nextPosition[0] - ball.nextPosition[0],2) + Math.pow(this.nextPosition[1] - ball.nextPosition[1],2));
             if(d <= radius + ball.radius)  {
                 System.out.println("Kolizja z piłką");
-                return true;
+                return ball.iD;
             }
         }
-        return false;
+        return -1;
     }
     public void changeDirectionAfterCollision(MyFrame frame){
 //        if (nextPosition[0] + radius >= frame.frameSizeX && direction >= 0 && direction <= Math.PI/2) // jeśli prawa ściana i kierunek w górę

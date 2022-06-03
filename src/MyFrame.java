@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class MyFrame extends JFrame {
@@ -28,19 +29,19 @@ public class MyFrame extends JFrame {
 
     }
 
-    public void setBallPositions(int[][] pos){
+    public void setBallPositions(ArrayList<int[]> pos){
         ballsPositions = pos;
-        for(int i = 0; i < ballsRadiuses.length; i++){
-            ballsPositions[i][0] -= ballsRadiuses[i];
-            ballsPositions[i][1] -= ballsRadiuses[i];
+        for(int i = 0; i < ballsRadiuses.size(); i++){
+            ballsPositions.get(i)[0] -= ballsRadiuses.get(i);
+            ballsPositions.get(i)[1] -= ballsRadiuses.get(i);
             //System.out.println("Hello from MyFrame class, x= "+ballsPositions[i][0] +" y:"+ballsPositions[i][1]);
         }
     }
-    public void setBallsRadiuses(int[] radiuses){
+    public void setBallsRadiuses(ArrayList<Integer> radiuses){
         ballsRadiuses = radiuses;
     }
 
-    public void setBallsColors(Color[] col){
+    public void setBallsColors(ArrayList<Color> col){
             ballsColors = col;
     }
 }
