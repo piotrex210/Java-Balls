@@ -54,33 +54,76 @@ public class Ball
     }
     public boolean collisionWithWall(MyFrame frame){
 
-        if (nextPosition[0] + radius >= frame.frameSizeX || nextPosition[0] - radius <= 0 ||
-                nextPosition[1] + radius >= frame.frameSizeY || nextPosition[1] - radius <= 0){
+        if (nextPosition[0] + radius >= frame.panelSizeX || nextPosition[0] - radius <= 0 ||
+                nextPosition[1] + radius >= frame.panelSizeY || nextPosition[1] - radius <= 0){
             System.out.println("Kolizja!!");
             return  true;
         } else return false;
     }
 
     public synchronized int collisionWithBalls(List<Ball> ballList){
-        Double d;
+        Double d; // odległość między środkami piłek
 
         for (Ball ball :
              balls) {
             if (iD == ball.iD ) continue;
             d = Math.sqrt(Math.pow(this.nextPosition[0] - ball.nextPosition[0],2) + Math.pow(this.nextPosition[1] - ball.nextPosition[1],2));
             if(d <= radius + ball.radius)  {
-                System.out.println("Kolizja z piłką");
+                System.out.println("Kolizja z piłką: "+ball.iD);
                 return ball.iD;
             }
         }
         return -1;
     }
-    public void changeDirectionAfterCollision(MyFrame frame){
-//        if (nextPosition[0] + radius >= frame.frameSizeX && direction >= 0 && direction <= Math.PI/2) // jeśli prawa ściana i kierunek w górę
-//        {
-//            direction += Math.PI/2;
-//        }
+    public synchronized void changeDirectionAfterCollisionWithBall(MyFrame frame){
+    direction = direction + Math.PI;
+    }
 
-        direction = direction + Math.PI;
+    public synchronized void changeDirectionAfterCollisionWithWall(MyFrame frame){
+        direction = direction%2.0*Math.PI;
+        if (nextPosition[0] + radius >= frame.panelSizeX && direction >= 0 && direction <= Math.PI/2.0) // jeśli prawa ściana i kierunek w górę
+        {
+            direction = (Math.PI - direction)%2.0*Math.PI;
+            System.out.println("warunek 1");
+        }
+        else if (nextPosition[0] + radius >= frame.panelSizeX && direction >= Math.PI*3.0/.02 && direction <= Math.PI*2.0) // jeśli prawa ściana i kierunek w dół
+        {
+            direction = (2.0*Math.PI - direction)%2.0*Math.PI;
+            System.out.println("warunek 2");
+        }
+        else if (nextPosition[0] - radius <= 0 && direction >= Math.PI/2.0 && direction <= Math.PI) // jeśli lewa ściana i kierunek w górę
+        {
+            direction = (Math.PI - direction)%2.0*Math.PI;
+            System.out.println("warunek 3");
+        }
+        else if (nextPosition[0] - radius <= 0 && direction >= Math.PI && direction <= Math.PI*3.0/2.0) // jeśli lewa ściana i kierunek w dół
+        {
+            direction = (3.0*Math.PI - direction)%2.0*Math.PI;
+            System.out.println("warunek 4");
+        }
+        else if (nextPosition[1] - radius <= 0 && direction >= 0 && direction <= Math.PI/2.0) // jeśli górna ściana i kierunek w prawo
+        {
+            direction = (2.0*Math.PI - direction)%2.0*Math.PI;
+            System.out.println("warunek 5");
+        }
+        else if (nextPosition[1] - radius <= 0 && direction >= Math.PI/2.0&& direction <= Math.PI) // jeśli górna ściana i kierunek w lewo
+        {
+            direction = (2.0*Math.PI - direction)%2.0*Math.PI;
+            System.out.println("warunek 6");
+        }
+        else if (nextPosition[1] + radius >= frame.panelSizeY && direction >= Math.PI*3.0/2.0 && direction <= 2.0*Math.PI) // jeśli dolna ściana i kierunek w prawo
+        {
+            direction = (2.0*Math.PI - direction)%2.0*Math.PI;
+            System.out.println("warunek 7");
+        }
+        else if (nextPosition[1] + radius >= frame.panelSizeY && direction >= Math.PI && direction <= Math.PI*3.0/2.0) // jeśli dolna ściana i kierunek w lewo
+        {
+            direction = (2.0*Math.PI - direction)%2.0*Math.PI;
+            System.out.println("warunek 8");
+        }
+        else {
+            direction = direction + Math.PI;
+            System.out.println("Znaleziono inny kierunek :O");
+        }
     }
 }

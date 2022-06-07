@@ -29,15 +29,15 @@ public class computeBall implements Runnable  {
                     System.out.println("Obliczam nową pozycję piłki: " + i);
                     balls.get(i).calculateNextPosition();
                     if(balls.get(i).collisionWithWall(frame)) {
-                        balls.get(i).changeDirectionAfterCollision(frame);
+                        balls.get(i).changeDirectionAfterCollisionWithBall(frame);
                         balls.get(i).calculateNextPosition();
                     }
                     int id2= balls.get(i).collisionWithBalls(balls);
                     if(id2 != -1){
-                        balls.get(i).changeDirectionAfterCollision(frame);
+                        balls.get(i).changeDirectionAfterCollisionWithBall(frame);
                         balls.get(i).calculateNextPosition();
-                        balls.get(i).changeDirectionAfterCollision(frame);
-                        balls.get(i).calculateNextPosition();
+                        balls.get(id2).changeDirectionAfterCollisionWithBall(frame);
+                        balls.get(id2).calculateNextPosition();
                     }
                     balls.get(i).setPosition(balls.get(i).getNextPosition());
                 }
