@@ -3,11 +3,12 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class MyFrame extends JFrame {
-    int frameSizeX = 800;
-    int frameSizeY = 800;
-    int[][] ballsPositions;
-    int[] ballsRadiuses;
-    Color[] ballsColors;
+    MyPanel panel;
+    public static int panelSizeX = 800;
+    public static int  panelSizeY = 800;
+    ArrayList<int[]> ballsPositions;
+    ArrayList<Integer> ballsRadiuses;
+    ArrayList<Color> ballsColors;
     MyFrame(){
         panel = new MyPanel(panelSizeX, panelSizeY);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -18,21 +19,11 @@ public class MyFrame extends JFrame {
         this.setTitle("Balls");
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        ballsColors = new Color[2];
-    }
-
-    public void paint(Graphics graphics){
-
-        super.paint(graphics);
-        Graphics2D g2D = (Graphics2D) graphics;
-
-        //g2D.fillRect(0,0,100,200);
-        g2D.setPaint(ballsColors[0]);
-        g2D.fillOval(ballsPositions[0][0], ballsPositions[0][1], 2*ballsRadiuses[0],2*ballsRadiuses[0]);
-        g2D.setPaint(ballsColors[1]);
-        g2D.fillOval(ballsPositions[1][0], ballsPositions[1][1], 2*ballsRadiuses[1],2*ballsRadiuses[1]);
+        //ballsColors = new Color[2];
 
     }
+
+
 
     public void setBallPositions(ArrayList<int[]> pos){
         ballsPositions = pos;

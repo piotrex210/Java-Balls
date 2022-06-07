@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.List;
 
 public class Ball
 {
@@ -14,6 +15,8 @@ public class Ball
         iD = id_;
         position[0] = pos[0];
         position[1] = pos[1];
+        nextPosition[0] = pos[0];
+        nextPosition[1] = pos[1];
         direction = dir;
         velocity = velo;
         radius = r;
@@ -21,11 +24,11 @@ public class Ball
         System.out.println("Hello from Ball class, x= "+position[0]+" y:"+pos[1]+" direction: "+direction+" velocity: "+velocity+"Color: "+color.toString());
     }
 
-    public int[] getPosition() {
+    public synchronized int[] getPosition() {
         return position;
     }
 
-    public int[] getNextPosition() {
+    public synchronized int[] getNextPosition() {
         return nextPosition;
     }
 
@@ -33,7 +36,7 @@ public class Ball
         return radius;
     }
 
-    public void setPosition(int[] position) {
+    public synchronized void setPosition(int[] position) {
         this.position = position;
     }
 
@@ -48,11 +51,11 @@ public class Ball
         return color;
     }
 
-    public void calculateNextPosition(){
+    public synchronized void calculateNextPosition(){
         nextPosition[0] += (int) velocity*Math.cos(direction);
         nextPosition[1] += (int) velocity*Math.sin(direction);
     }
-    public boolean collisionWithWall(MyFrame frame){
+    public synchronized boolean collisionWithWall(MyFrame frame){
 
         if (nextPosition[0] + radius >= frame.panelSizeX || nextPosition[0] - radius <= 0 ||
                 nextPosition[1] + radius >= frame.panelSizeY || nextPosition[1] - radius <= 0){
@@ -65,7 +68,7 @@ public class Ball
         Double d; // odległość między środkami piłek
 
         for (Ball ball :
-             balls) {
+                ballList) {
             if (iD == ball.iD ) continue;
             d = Math.sqrt(Math.pow(this.nextPosition[0] - ball.nextPosition[0],2) + Math.pow(this.nextPosition[1] - ball.nextPosition[1],2));
             if(d <= radius + ball.radius)  {
@@ -88,7 +91,7 @@ public class Ball
         }
         else if (nextPosition[0] + radius >= frame.panelSizeX && direction >= Math.PI*3.0/.02 && direction <= Math.PI*2.0) // jeśli prawa ściana i kierunek w dół
         {
-            direction = (2.0*Math.PI - direction)%2.0*Math.PI;
+            direction = (3.0*Math.PI - direction)%2.0*Math.PI;
             System.out.println("warunek 2");
         }
         else if (nextPosition[0] - radius <= 0 && direction >= Math.PI/2.0 && direction <= Math.PI) // jeśli lewa ściana i kierunek w górę
