@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.lang.Object;
@@ -20,7 +19,7 @@ public class Main {
         //Ball[] balls = {ball1, ball2};
         List<Ball> ballList = new ArrayList<Ball>();
         for(int i = 0; i <nBalls; i++) {
-            ballList.add(new Ball(i, positions[i], 25, rand.nextDouble() * 2 * Math.PI, 10, Color.GREEN));
+            ballList.add(new Ball(i, positions[i], 25, rand.nextDouble() * 2 * Math.PI, 5, Color.getHSBColor(rand.nextFloat()*360, 100, 100)));
         }
 
         MyFrame frame1 = new MyFrame();
@@ -47,15 +46,9 @@ public class Main {
         frame1.setBallsRadiuses(radiuses);
         frame1.setBallsColors(colors);
         frame1.setBallPositions(currentPos);
-
-        thread0.start();
-        thread1.start();
-        thread2.start();
-
-
         while(true){
             try {
-                TimeUnit.MILLISECONDS.sleep(100);
+                TimeUnit.MILLISECONDS.sleep(50);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
