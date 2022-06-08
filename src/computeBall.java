@@ -29,26 +29,20 @@ public class computeBall implements Runnable  {
                     System.out.println("Obliczam nową pozycję piłki: " + i);
                     balls.get(i).calculateNextPosition();
                     if(balls.get(i).collisionWithWall(frame)) {
-                        System.out.println("Direction przed: "+ balls.get(i).getDirection());
                         balls.get(i).changeDirectionAfterCollisionWithWall(frame);
-                        System.out.println("Direction po: "+ balls.get(i).getDirection());
                         balls.get(i).calculateNextPosition();
                         balls.get(i).setPosition(balls.get(i).getNextPosition());
                     }
                     int id2= balls.get(i).collisionWithBalls(balls);
-                    if(id2 != -1){
+                    if(id2 != -1) {
+
                         balls.get(i).changeDirectionAfterCollisionWithBall(frame);
                         balls.get(i).calculateNextPosition();
                         balls.get(i).setPosition(balls.get(i).getNextPosition());
 
-                        //balls.get(id2).changeDirectionAfterCollisionWithBall(frame);
-                        //balls.get(id2).calculateNextPosition();
-                        //balls.get(id2).setPosition(balls.get(id2).getNextPosition());
                     }
+
                     balls.get(i).setPosition(balls.get(i).getNextPosition());
-
-
-
                 }
             }
 
@@ -59,13 +53,8 @@ public class computeBall implements Runnable  {
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     System.out.println("Wybudzono wątek: " + id);
-
-                    // zrób coś po wybudzeniu
                 }
-                //monitor.notifyAll();
             }
-            //notifyAll();
-
         }
 
 

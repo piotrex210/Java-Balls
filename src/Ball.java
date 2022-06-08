@@ -10,6 +10,8 @@ public class Ball
     private int radius;
     private Color color;
 
+    public boolean collisionWithBall;
+
     Ball(int id_, double pos[], int r, double dir, double velo, Color c){
         iD = id_;
         position[0] = pos[0];
@@ -18,6 +20,7 @@ public class Ball
         velocity = velo;
         radius = r;
         color = c;
+        collisionWithBall = false;
         System.out.println("Hello from Ball class, x= "+position[0]+" y:"+pos[1]+" direction: "+direction+" velocity: "+velocity+"Color: "+color.toString());
     }
 
@@ -72,13 +75,15 @@ public class Ball
             d = Math.sqrt(Math.pow(this.nextPosition[0] - ball.nextPosition[0],2) + Math.pow(this.nextPosition[1] - ball.nextPosition[1],2));
             if(d <= radius + ball.radius)  {
                 System.out.println("Kolizja z piłką: "+ball.iD);
+                collisionWithBall = true;
+                ball.collisionWithBall = true;
                 return ball.iD;
             }
         }
         return -1;
     }
     public synchronized void changeDirectionAfterCollisionWithBall(MyFrame frame){
-    direction = direction + Math.PI;
+        direction = direction + Math.PI/2.0;
     }
 
     public synchronized void changeDirectionAfterCollisionWithWall(MyFrame frame){
@@ -91,57 +96,6 @@ public class Ball
 
         if(py - radius <= 0 || py + radius >= frame.panelSizeY) vy = -vy;
         if(px + radius >= frame.panelSizeX || px - radius <=0) vx = -vx;
-        //System.out.println("Oryginalne vx: "+vx+"vy:"+vy);
         direction = Math.atan2(vy, vx);
-        //System.out.println("Wyliczone z direction vx: "+vx+"vy:"+vy);
-
-
-/*
-        if (nextPosition[0] + radius >= frame.panelSizeX && direction >= 0 && direction <= Math.PI/2.0) // jeśli prawa ściana i kierunek w górę
-        {
-            direction = (Math.PI - direction)%2.0*Math.PI;
-            System.out.println("warunek 1");
-        }
-        else if (nextPosition[0] + radius >= frame.panelSizeX && direction >= Math.PI*3.0/.02 && direction <= Math.PI*2.0) // jeśli prawa ściana i kierunek w dół
-        {
-            direction = (3.0*Math.PI - direction)%2.0*Math.PI;
-            System.out.println("warunek 2");
-        }
-        else if (nextPosition[0] - radius <= 0 && direction >= Math.PI/2.0 && direction <= Math.PI) // jeśli lewa ściana i kierunek w górę
-        {
-            direction = (Math.PI - direction)%2.0*Math.PI;
-            System.out.println("warunek 3");
-        }
-        else if (nextPosition[0] - radius <= 0 && direction >= Math.PI && direction <= Math.PI*3.0/2.0) // jeśli lewa ściana i kierunek w dół
-        {
-            direction = (3.0*Math.PI - direction)%2.0*Math.PI;
-            System.out.println("warunek 4");
-        }
-        else if (nextPosition[1] - radius <= 0 && direction >= 0 && direction <= Math.PI/2.0) // jeśli górna ściana i kierunek w prawo
-        {
-            direction = (2.0*Math.PI - direction)%2.0*Math.PI;
-            System.out.println("warunek 5");
-        }
-        else if (nextPosition[1] - radius <= 0 && direction >= Math.PI/2.0&& direction <= Math.PI) // jeśli górna ściana i kierunek w lewo
-        {
-            direction = (2.0*Math.PI - direction)%2.0*Math.PI;
-            System.out.println("warunek 6");
-        }
-        else if (nextPosition[1] + radius >= frame.panelSizeY && direction >= Math.PI*3.0/2.0 && direction <= 2.0*Math.PI) // jeśli dolna ściana i kierunek w prawo
-        {
-            direction = (2.0*Math.PI - direction)%2.0*Math.PI;
-            System.out.println("warunek 7");
-        }
-        else if (nextPosition[1] + radius >= frame.panelSizeY && direction >= Math.PI && direction <= Math.PI*3.0/2.0) // jeśli dolna ściana i kierunek w lewo
-        {
-            direction = (2.0*Math.PI - direction)%2.0*Math.PI;
-            System.out.println("warunek 8");
-        }
-        else {
-            direction = direction + Math.PI;
-            System.out.println("Znaleziono inny kierunek :O");
-        }
-
- */
     }
 }
