@@ -20,7 +20,7 @@ public class computeBall implements Runnable  {
 
         while (true) {
             try {
-                Thread.sleep(50);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 System.out.println("Exception sleep in run");
             }
@@ -29,17 +29,26 @@ public class computeBall implements Runnable  {
                     System.out.println("Obliczam nową pozycję piłki: " + i);
                     balls.get(i).calculateNextPosition();
                     if(balls.get(i).collisionWithWall(frame)) {
-                        balls.get(i).changeDirectionAfterCollisionWithBall(frame);
+                        System.out.println("Direction przed: "+ balls.get(i).getDirection());
+                        balls.get(i).changeDirectionAfterCollisionWithWall(frame);
+                        System.out.println("Direction po: "+ balls.get(i).getDirection());
                         balls.get(i).calculateNextPosition();
+                        balls.get(i).setPosition(balls.get(i).getNextPosition());
                     }
                     int id2= balls.get(i).collisionWithBalls(balls);
                     if(id2 != -1){
                         balls.get(i).changeDirectionAfterCollisionWithBall(frame);
                         balls.get(i).calculateNextPosition();
-                        balls.get(id2).changeDirectionAfterCollisionWithBall(frame);
-                        balls.get(id2).calculateNextPosition();
+                        balls.get(i).setPosition(balls.get(i).getNextPosition());
+
+                        //balls.get(id2).changeDirectionAfterCollisionWithBall(frame);
+                        //balls.get(id2).calculateNextPosition();
+                        //balls.get(id2).setPosition(balls.get(id2).getNextPosition());
                     }
                     balls.get(i).setPosition(balls.get(i).getNextPosition());
+
+
+
                 }
             }
 

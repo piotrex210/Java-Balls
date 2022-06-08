@@ -6,15 +6,19 @@ public class MyFrame extends JFrame {
     MyPanel panel;
     public static int panelSizeX = 800;
     public static int  panelSizeY = 800;
-    ArrayList<int[]> ballsPositions;
+    ArrayList<double[]> ballsPositions;
     ArrayList<Integer> ballsRadiuses;
     ArrayList<Color> ballsColors;
     MyFrame(){
+        this.setSize(panelSizeX+100, panelSizeY+100);
         panel = new MyPanel(panelSizeX, panelSizeY);
+        this.setLayout(new BorderLayout());
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(panelSizeX, panelSizeY);
+        getContentPane().setBackground(Color.ORANGE);
+
         //this.setLayout(new FlowLayout());
-        this.add(panel);
+        this.add(panel, BorderLayout.CENTER);
         this.pack();
         this.setTitle("Balls");
         this.setLocationRelativeTo(null);
@@ -25,7 +29,7 @@ public class MyFrame extends JFrame {
 
 
 
-    public void setBallPositions(ArrayList<int[]> pos){
+    public void setBallPositions(ArrayList<double[]> pos){
         ballsPositions = pos;
         panel.ballsPositions = pos;
         for(int i = 0; i < ballsRadiuses.size(); i++){

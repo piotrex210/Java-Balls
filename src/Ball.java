@@ -3,14 +3,14 @@ import java.awt.*;
 public class Ball
 {
     private int iD;
-    private int[] position = new int[2];
-    private int[] nextPosition = new int[2];
+    private double[] position = new double[2];
+    private double[] nextPosition = new double[2];
     private double direction;
     private double velocity;
     private int radius;
     private Color color;
 
-    Ball(int id_, int pos[], int r, double dir, double velo, Color c){
+    Ball(int id_, double pos[], int r, double dir, double velo, Color c){
         iD = id_;
         position[0] = pos[0];
         position[1] = pos[1];
@@ -32,6 +32,8 @@ public class Ball
     public int getRadius() {
         return radius;
     }
+
+    public double getDirection(){ return direction;}
 
     public void setPosition(int[] position) {
         this.position = position;
@@ -80,17 +82,20 @@ public class Ball
     }
 
     public synchronized void changeDirectionAfterCollisionWithWall(MyFrame frame){
-        direction = direction%2.0*Math.PI;
-        double vx = Math.sin(direction);
-        double vy = Math.cos(direction);
+        direction = direction%(2.0*Math.PI);
+        double vx = Math.cos(direction);
+        double vy = Math.sin(direction);
 
         double px = nextPosition[0];
         double py = nextPosition[1];
 
         if(py - radius <= 0 || py + radius >= frame.panelSizeY) vy = -vy;
         if(px + radius >= frame.panelSizeX || px - radius <=0) vx = -vx;
+        //System.out.println("Oryginalne vx: "+vx+"vy:"+vy);
+        direction = Math.atan2(vy, vx);
+        //System.out.println("Wyliczone z direction vx: "+vx+"vy:"+vy);
 
-        direction = Math.atan2(vx, vy);
+
 /*
         if (nextPosition[0] + radius >= frame.panelSizeX && direction >= 0 && direction <= Math.PI/2.0) // jeśli prawa ściana i kierunek w górę
         {

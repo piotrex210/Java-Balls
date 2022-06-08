@@ -15,11 +15,11 @@ public class Main {
         //Ball ball1 = new Ball(0,pos, 50, rand.nextDouble()*2*Math.PI, 10, Color.GREEN);
         //Ball ball2 = new Ball(1,pos2, 25, rand.nextDouble()*2*Math.PI, 10, Color.BLUE);
 
-        int[][] positions = {{50,50}, {100,550},{150,150},{200,250},{250,250},{300,350},{350,350},{400,750},{450,450},{500,550}};
+        double[][] positions = {{600,350}, {100,550},{150,150},{200,250},{250,450},{300,350},{350,350},{400,750},{450,450},{500,550}};
         //Ball[] balls = {ball1, ball2};
         List<Ball> ballList = new ArrayList<Ball>();
         for(int i = 0; i <nBalls; i++) {
-            ballList.add(new Ball(i, positions[i], 25, rand.nextDouble() * 2 * Math.PI, 5, Color.getHSBColor(rand.nextFloat()*360, 100, 100)));
+            ballList.add(new Ball(i, positions[i], 25, rand.nextDouble() * 2 * Math.PI, 1, new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256))));
         }
 
         MyFrame frame1 = new MyFrame();
@@ -30,7 +30,7 @@ public class Main {
 
 
 
-        ArrayList<int[]> currentPos = new ArrayList<int[]>();
+        ArrayList<double[]> currentPos = new ArrayList<double[]>();
         ArrayList<Integer> radiuses = new ArrayList<Integer>();
         ArrayList<Color> colors = new ArrayList<Color>();
         for (Ball b: ballList) {
@@ -48,7 +48,7 @@ public class Main {
         frame1.setBallPositions(currentPos);
         while(true){
             try {
-                TimeUnit.MILLISECONDS.sleep(50);
+                TimeUnit.MILLISECONDS.sleep(10);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

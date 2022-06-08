@@ -6,7 +6,7 @@ public class MyPanel extends JPanel {
     public static int panelSizeX;
     public static int  panelSizeY;
 
-    ArrayList<int[]> ballsPositions;
+    ArrayList<double[]> ballsPositions;
     ArrayList<Integer> ballsRadiuses;
     ArrayList<Color> ballsColors;
 
@@ -14,7 +14,8 @@ public class MyPanel extends JPanel {
         panelSizeX = x;
         panelSizeY = y;
         this.setPreferredSize(new Dimension(panelSizeX,panelSizeY));
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.white);
+        setBorder(BorderFactory.createEmptyBorder( 50, 50,  50, 50));
     }
 
     public void paint(Graphics graphics){
@@ -24,7 +25,7 @@ public class MyPanel extends JPanel {
         //getContentPane().setBackground(Color.BLACK);
         for (int i = 0; i < ballsRadiuses.size(); i++) {
             g2D.setPaint(ballsColors.get(i));
-            g2D.fillOval(ballsPositions.get(i)[0], ballsPositions.get(i)[1], 2*ballsRadiuses.get(i),2*ballsRadiuses.get(i));
+            g2D.fillOval((int)ballsPositions.get(i)[0], (int)ballsPositions.get(i)[1], 2*ballsRadiuses.get(i),2*ballsRadiuses.get(i));
         }
     }
 }
