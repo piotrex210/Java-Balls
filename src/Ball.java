@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.List;
 
 public class Ball
 {
@@ -16,6 +17,8 @@ public class Ball
         iD = id_;
         position[0] = pos[0];
         position[1] = pos[1];
+        nextPosition[0] = pos[0];
+        nextPosition[1] = pos[1];
         direction = dir;
         velocity = velo;
         radius = r;
@@ -24,11 +27,11 @@ public class Ball
         System.out.println("Hello from Ball class, x= "+position[0]+" y:"+pos[1]+" direction: "+direction+" velocity: "+velocity+"Color: "+color.toString());
     }
 
-    public int[] getPosition() {
+    public synchronized double[] getPosition() {
         return position;
     }
 
-    public int[] getNextPosition() {
+    public synchronized double[] getNextPosition() {
         return nextPosition;
     }
 
@@ -38,7 +41,7 @@ public class Ball
 
     public double getDirection(){ return direction;}
 
-    public void setPosition(int[] position) {
+    public synchronized void setPosition(double[] position) {
         this.position = position;
     }
 
@@ -53,11 +56,14 @@ public class Ball
         return color;
     }
 
-    public void calculateNextPosition(){
-        nextPosition[0] += (int) velocity*Math.cos(direction);
-        nextPosition[1] += (int) velocity*Math.sin(direction);
+    public synchronized void calculateNextPosition(){
+        double px = velocity*Math.cos(direction);
+        double py = velocity*Math.sin(direction);
+
+        nextPosition[0] = position[0] + px;
+        nextPosition[1] = position[1] + py;
     }
-    public boolean collisionWithWall(MyFrame frame){
+    public synchronized boolean collisionWithWall(MyFrame frame){
 
         if (nextPosition[0] + radius >= frame.panelSizeX || nextPosition[0] - radius <= 0 ||
                 nextPosition[1] + radius >= frame.panelSizeY || nextPosition[1] - radius <= 0){
@@ -70,7 +76,7 @@ public class Ball
         Double d; // odległość między środkami piłek
 
         for (Ball ball :
-             balls) {
+                ballList) {
             if (iD == ball.iD ) continue;
             d = Math.sqrt(Math.pow(this.nextPosition[0] - ball.nextPosition[0],2) + Math.pow(this.nextPosition[1] - ball.nextPosition[1],2));
             if(d <= radius + ball.radius)  {

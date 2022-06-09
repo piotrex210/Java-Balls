@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.lang.Object;
@@ -33,7 +34,13 @@ public class Main {
         frame1.setBallsRadiuses(radiuses);
         frame1.setBallsColors(colors);
         frame1.setBallPositions(currentPos);
-        while(true){
+
+        thread0.start();
+        thread1.start();
+        thread2.start();
+
+
+        while (true) {
             try {
                 TimeUnit.MILLISECONDS.sleep(7);
             } catch (InterruptedException e) {
